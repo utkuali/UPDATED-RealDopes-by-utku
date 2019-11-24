@@ -2,18 +2,19 @@
 RegisterNetEvent("esx_optionalneeds:onAdrenaline")
 AddEventHandler("esx_optionalneeds:onAdrenaline", function()
 
-  local lib, anim = 'fbi_3_int-0', 'cs_fib3_syringe-0'  -- usage animation (I fucked this up and don't bother to add working animation)
-        local playerPed = PlayerPedId()
-    	ESX.ShowNotification('Her şey artık daha net!') -- usage notification // English: "Everything is crystal clear now."
-        ESX.Streaming.RequestAnimDict(lib, function()
-            TaskPlayAnim(playerPed, lib, anim, 8.0, 8.0, -1, 0, 0, false, false, false)
-            Citizen.Wait(500)
-            while IsEntityPlayingAnim(playerPed, lib, anim, 3) do
-                Citizen.Wait(0)
-                DisableAllControlActions(0)
-            end
-            TriggerEvent('esx_optionalneeds:adrenaline') -- below effect
-          end)
+    local lib, anim = 'fbi_3_int-0', 'cs_fib3_syringe-0'  -- usage animation (I fucked this up and don't bother to add working animation)
+    local playerPed = PlayerPedId()
+
+    ESX.ShowNotification('Her şey artık daha net!') -- usage notification // English: "Everything is crystal clear now."
+    ESX.Streaming.RequestAnimDict(lib, function()
+        TaskPlayAnim(playerPed, lib, anim, 8.0, 8.0, -1, 0, 0, false, false, false)
+        Citizen.Wait(500)
+        while IsEntityPlayingAnim(playerPed, lib, anim, 3) do
+            Citizen.Wait(0)
+            DisableAllControlActions(0)
+        end
+        TriggerEvent('esx_optionalneeds:adrenaline') -- below effect
+    end)
 end)
 
 -------------EFEKTLER---------------
@@ -28,12 +29,6 @@ Citizen.CreateThread(function()           -- yavaş koşma için call // check i
       if yavasKos then
         SetPedMoveRateOverride(PlayerPedId(), 0.1) -- you can edit this ratio : values above 1.0 make charater move faster / values belowe 1.0 make charater slower / 1.0 is default speed - This makes characters movement faster, which means even your walking speed
       end
-    end
-  end)
-
-Citizen.CreateThread(function()           -- hızlı koşma için call // chechk if fast run activated
-    while true do
-      Citizen.Wait(16)
       if hizliKos then
         SetPedMoveRateOverride(PlayerPedId(), 1.050) -- you can edit this ratio : values above 1.0 make charater move faster / values belowe 1.0 make charater slower / 1.0 is default speed - This makes characters movement faster, which means even your walking speed
       end
